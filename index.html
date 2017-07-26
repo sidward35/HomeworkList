@@ -1,0 +1,86 @@
+
+<html !doctype>
+  
+<head>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" type="text/css" href="css/qdIsm.css">
+  <script type="text/javascript" src="js/script.js"></script>
+  </head>
+  <body>
+<h1><span class="yellow"><a>Homework</a></span></h1>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+     <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCIoOQYpbFze6w1bnzu6_xa5z8pEh8KKZU",
+    	authDomain: "qook3-de7f0.firebaseapp.com",
+    	databaseURL: "https://qook3-de7f0.firebaseio.com",
+    	storageBucket: "qook3-de7f0.appspot.com",
+    	messagingSenderId: "85584553552"
+      };
+      firebase.initializeApp(config); /*global firebase*/
+      </script>
+      
+
+<div id="hackathon">
+  <table class="container">
+	<thead>
+		<tr>
+			<th><h1>Assignment</h1></th>
+			<th><h1>Subject</h1></th>
+			<th><h1>Due Date</h1></th>
+			 <!--<th><h1>Delete</h1></th>-->
+		</tr>
+	</thead>
+	<tbody id="table_body">
+		<script type="text/javascript">
+      	var rootRef = firebase.database().ref().child("organizers");
+   
+    
+    rootRef.on("child_added", snap => {
+        
+        
+         var name = snap.child("0").val();
+         var email = snap.child("2").val();
+         var website = snap.child("1").val();
+
+		var table_row=document.getElementById("table_body");
+		
+		var new_row=table_row.insertRow(table_row.rows.length);
+		function createCell(cell, text, style) {
+    		var div = document.createElement('div'), // create DIV element
+        	txt = document.createTextNode(text); // create text node
+    		div.appendChild(txt);                    // append text node to the DIV
+    		div.setAttribute('class', style);        // set DIV class attribute
+    		div.setAttribute('className', style);    // set DIV class attribute for IE (?!)
+    		cell.appendChild(div);                   // append DIV to the table cell
+		}
+		
+	    	function createButton(context, text, func, style){
+    		var button = document.createElement("input");
+    		button.type = "button";
+    		button.value = text;
+    		button.onclick = func;
+		button.setAttribute('class', style);
+		button.setAttribute('className', style);
+    		context.appendChild(button);
+		}
+	    
+		createCell(new_row.insertCell(0), name, 'row');
+        	createCell(new_row.insertCell(1), website, 'row');
+        	createCell(new_row.insertCell(2), email, 'row');
+	    	//createButton(new_row.insertCell(null), "Delete", remove(0), 'row');
+  
+		document.getElementById("nameinsert").innerHTML = name;
+		document.getElementById("emailinsert").innerHTML = email;
+		document.getElementById("websiteinsert").innerHTML = website;
+    });
+      </script>
+	</tbody>
+</table>
+</div>
+
+ </body>
+  </html>
